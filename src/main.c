@@ -1,6 +1,9 @@
 #include <stdio.h>
-#include "matrix.c"
+#include "matriz.c"
+
+
 
 int main() {
+    
     return 0;
 }

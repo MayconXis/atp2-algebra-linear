@@ -1,3 +1,4 @@
+#include <stdio.h>
 
 // parar guardar os dados da matriz
 typedef struct {

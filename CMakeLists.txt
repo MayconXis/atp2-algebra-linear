@@ -5,4 +5,6 @@ set(CMAKE_C_STANDARD 99)
 
 add_executable(Atp2_Algebra src/main.c
         src/matrix.c
-        src/matrix.c)
+        src/matrix.c
+        src/matriz.c
+        src/sistemaLinear.c)
