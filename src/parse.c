@@ -1,98 +1,14 @@
 #include <stdio.h>
 #include <string.h>
-
-#define qtdCoef 3
 #define TAMEQ 60
 
-typedef struct{
-    double coef[qtdCoef];
-    double igualdade;
-}Linha;
-
-typedef struct{
-    double matriz[10][10];
-    int linhas;
-    int colunas;
-}Matriz;
-
-
-typedef struct{
-    Linha linhas[10];
-    int qtdLinhas;
-    int qtdColunas;
-}SistemaLinear;
-
-typedef enum{
-    FALSE, TRUE
-}booleano;
 
 Linha parser(char equacao[], SistemaLinear *sis);
 int descobrirCoef(char c);
 void limparLixoLinha(Linha *e);
-void aberturaPrograma();
+
 int lerArquivo(SistemaLinear *sis);
 int lerTerminal(SistemaLinear *sis);
-void continuar();
-void printarEqs(Linha l[], int tam);
-
-
-
-int main(){
-    char linha[TAMEQ];
-    char variaveis[20];
-    Linha lin[10];
-
-    int quantidadeLinhas;
-    
-    while(TRUE){
-        aberturaPrograma();
-        int opcao;
-        scanf("%d", &opcao);
-        getchar();
-        switch(opcao){
-            case 1:
-                printf("Sistema Linear: \n");
-                SistemaLinear sistema;
-                sistema.qtdColunas = 0;
-                int esc = escolhaEntrada();
-
-                if(esc == 1){
-                    sistema.qtdLinhas = lerArquivo(&sistema);
-                }else{
-                    sistema.qtdLinhas = lerTerminal(&sistema);
-                } 
-        }
-
-    }
-}
-
-Matriz aumentarMatriz(SistemaLinear sis){
-    Matriz aumentada;
-    int linha = sis.qtdLinhas;
-    int colunaAumentada = sis.qtdColunas + 1;
-
-    aumentada.linhas = linha;
-    aumentada.colunas = colunaAumentada;
-
-    for(int i = 0; i < linha; i++){
-        for(int j = 0; j < colunaAumentada - 1; j++){
-            aumentada.matriz[i][j] = sis.linhas[i].coef[j];
-        }
-        aumentada.matriz[i][colunaAumentada-1] = sis.linhas[i].igualdade;     
-    }
-    return aumentada;
-}
-
-
-int escolhaEntrada(){
-    int o;
-    printf("Escolha uma opção: \n");
-    printf("[1] - Ler de Arquivo\n");
-    printf("[2] - Ler do Terminal\n");
-    scanf("%d", &o);
-    getchar();
-    return o;
-}
 
 int descobrirCoef(char c){
     char variaveisXYZ[] = "xyz";
@@ -103,7 +19,6 @@ int descobrirCoef(char c){
             return i;
         }
     }
-
     return -1;
 }
 
@@ -207,39 +122,4 @@ void limparLixoLinha(Linha *l){
     l->igualdade = 0;
 }
 
-int descobrirLinhasArq(){
-    FILE *arq = fopen("Equacoes.txt", "r");
 
-    if (arq == NULL){
-        printf("Arquivo não encontrado \n");
-        return 0;
-    }
-
-    char a[TAMEQ];
-
-    int linhas = 0;
-    while(fscanf(arq, "%[^\n]s", a)){
-        fgetc(arq);
-        linhas++;
-    }
-
-    fclose(arq);
-
-    return linhas;
-}
-
-void aberturaPrograma(){
-    printf("PROGRAMA DE MATRIZES\n");
-    printf("Escolha uma opção: \n");
-    printf("[1] - Resolver Sistema Linear\n");
-    printf("[2] - Analisar Transformação Linear\n");
-    printf("[3] - Verificar Base de um Espaço Vetorial\n");
-    printf("[4] - Calcular Autovalores e Autovetores\n");
-    printf("[0] - Sair\n");
-}
-
-
-void continuar(){
-    printf("Pressione enter para continuar...");
-    while (getchar() != '\n');
-}
