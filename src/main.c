@@ -1,9 +1,11 @@
 #include <stdio.h>
-#include "matriz.c"
+#include "matrizStruct.c"
+#include "imprimir.c"
+#include "sistema.c"
 
 
 
 int main() {
-    
+
     return 0;
 }
