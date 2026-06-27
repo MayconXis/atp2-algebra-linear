@@ -30,7 +30,6 @@ void escalonamento(Matriz *matriz) {
                 continue; // Se o pivô for zero, pula a linha, tava dando nan quando fazia a divisao
             }
 
-
             // Descobre o número pra zerar a posição atual
             // Divide o número pelo pivô para zerar
             multiplicador = (*matriz).dados[linha][coluna] / (*matriz).dados[coluna][coluna];
@@ -108,5 +107,30 @@ void resolverSistema(SistemaLinear sistema) {
         printf("Sistema possui infinitas solucoes.\n");
     } else {
         printf("Sistema impossivel. Nao possui solucao.\n");
+    }
+}
+
+Matriz tranformarEmMatriz(SistemaLinear sistema){
+    Matriz matriz;
+    matriz.linhas = sistema.qtdLinhas;
+    matriz.colunas = sistema.qtdColunas;
+    for(int i = 0; i < matriz.linhas; i++){
+        for(int j = 0; j < matriz.colunas; j++){
+            matriz.dados[i][j] = sistema.linhas[i].coef[j];
+        }      
+    }
+    return matriz;
+}
+
+
+int linhasUteis(Matriz m){
+    int uteis = 0;
+    for(int i = 0; i < m.linhas; i++){
+        for(int j = 0; j < m.linhas; j++){
+            if(m.dados[i][j] != 0){
+                uteis++;
+                break;
+            }
+        }
     }
 }

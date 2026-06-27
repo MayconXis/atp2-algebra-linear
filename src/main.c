@@ -33,6 +33,41 @@ int main() {
 
             case 2: {
                 printf("Transformacao Linear\n");
+                int bijetora = 0, injetora = 0, sobrejetora = 0, nucleo;
+                int DimE; // dimensao entrada
+                int DimS; // dimensao saida
+                printf("Digite a R(entrada) -> R(saida) respectivamente: \n");
+                scanf("%d %d", &DimE, &DimS);
+                getchar();
+                SistemaLinear tl;
+                tl.qtdColunas = 0;
+                tl.qtdLinhas = lerArquivo(&tl);
+                Matriz mat = tranformarEmMatriz(tl);
+                escalonamento(&mat);
+                int imagem = linhasUteis(mat); //retorna numero de linhas nao nulas, dimensão imagem
+
+                printf("\n");
+                printf("Informações sobre a Transformação Linear R(%d) -> R(%d):\n", DimE, DimS);
+                if(imagem == DimS){
+                    printf("Dimensão da imagem (%d) = Dimensão de destino (%d)\n", imagem, DimS);
+                    printf("Portanto -> Sobrejetora\n");
+                    sobrejetora = 1;
+                }
+                printf("\n");
+                nucleo = DimE - imagem;
+                printf("Dimensão do nucleo = Dimensão de entrada - Dimensão da imagem\n");
+                printf("Dimensão do nucleo = %d - %d | Resultado = %d\n", DimE, imagem, DimE-imagem);
+                if(nucleo == 0){
+                    printf("Portanto -> Injetora\n");
+                    injetora = 1;
+                }
+                printf("\n");
+                if(sobrejetora && injetora){
+                    printf("Transformação Linear é Sobrejetora e Injetora\n");
+                    printf("Portanto -> Bijetora\n");
+                }
+                printf("\n");
+
             }
             break;
 
