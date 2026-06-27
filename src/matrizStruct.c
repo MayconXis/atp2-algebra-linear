@@ -21,6 +21,11 @@ typedef enum{
     FALSE, TRUE
 }booleano;
 
+typedef enum {
+    SOLUCAO_UNICA,
+    INFINITAS_SOLUCOES,
+    SEM_SOLUCAO
+} TipoSolucao;
 
 
 
