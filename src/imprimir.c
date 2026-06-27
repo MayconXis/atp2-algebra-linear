@@ -22,11 +22,12 @@ void imprimir_sistemaLienar(SistemaLinear sistema) {
 
 void aberturaPrograma(){
     printf("PROGRAMA DE MATRIZES\n");
-    printf("Escolha uma opção: \n");
+    printf("Escolha uma opcao: \n");
     printf("[1] - Resolver Sistema Linear\n");
-    printf("[2] - Analisar Transformação Linear\n");
-    printf("[3] - Verificar Base de um Espaço Vetorial\n");
+    printf("[2] - Analisar Transformacao Linear\n");
+    printf("[3] - Verificar Base de um Espaco Vetorial\n");
     printf("[4] - Calcular Autovalores e Autovetores\n");
+    printf("[5] - Teste automatizado\n");
     printf("[0] - Sair\n");
 }
 
