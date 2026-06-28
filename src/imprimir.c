@@ -28,6 +28,7 @@ void aberturaPrograma(){
     printf("[3] - Verificar Base de um Espaco Vetorial\n");
     printf("[4] - Calcular Autovalores e Autovetores\n");
     printf("[5] - Teste automatizado\n");
+    printf("[6] - Escrever no Arquivo\n");
     printf("[0] - Sair\n");
 }
 
@@ -35,9 +36,49 @@ void aberturaPrograma(){
 int escolhaEntrada(){
     int o;
     printf("Escolha uma opção: \n");
-    printf("[1] - Ler de Arquivo\n");
+    printf("[1] - Ler de Arquivo (Certifique-se que há dados no arquivo!)\n");
     printf("[2] - Ler do Terminal\n");
     scanf("%d", &o);
     getchar();
     return o;
 }
+
+void enterPraContinuar(){
+    printf("Pressione enter pra continuar...\n");
+    while(getchar() != '\n');
+}
+
+void limparTela(){
+    #ifdef _WIN32
+        system("cls"); 
+    #else
+        system("clear"); 
+    #endif
+}
+
+void moldura(int qtd){
+    for(int i = 0; i < qtd; i++){
+        printf("=");
+    }
+    printf("\n");
+}
+
+int escolhaLeitura(int esc, SistemaLinear *sis) {
+    if (esc == 1) {
+        return lerArquivo(sis);
+    } else if (esc == 2) {
+        moldura(75);
+        informacoesLeitura();
+        moldura(75);
+        return lerTerminal(sis);
+    } else {
+        printf("Opção invalida\n");
+        return -1;
+    }
+}
+
+void informacoesLeitura(){
+    printf("\t- Digite cada LINHA DE ENTRADA uma abaixo da outra -\n");
+    printf("\t- ESCREVA 'FIM' PARA TERMINAR A LEITURA -\n");
+}
+

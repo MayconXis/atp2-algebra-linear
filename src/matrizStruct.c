@@ -10,7 +10,6 @@ typedef struct{
     int colunas;
 }Matriz;
 
-
 typedef struct{
     Linha linhas[10];
     int qtdLinhas;

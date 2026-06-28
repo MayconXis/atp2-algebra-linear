@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <strings.h>
 #define TAMEQ 60
 
 
@@ -32,7 +33,7 @@ int lerArquivo(SistemaLinear *sis){
 
     char linhaLida[TAMEQ];
     int i = 0;
-    while(fscanf(arq, "%[^\n]s", linhaLida) != EOF){
+    while(fscanf(arq, " %[^\n]", linhaLida) == 1){
         fgetc(arq); //Pega o \n que ficou no arquivo
         sis->linhas[i++] = parser(linhaLida, sis); //salva a linha parseada no sistema e incrementa i
     }
@@ -41,17 +42,17 @@ int lerArquivo(SistemaLinear *sis){
 }
 
 int lerTerminal(SistemaLinear *sis){
-    int numeroLinhas;
-    char equacao[TAMEQ];
-    printf("informe quantas linhas haverá: \n"); 
-    scanf("%d", &numeroLinhas);
-    getchar();
+    int numeroLinhas = 0;
+    char linhaEntrada[TAMEQ];
 
-    for(int i = 0; i < numeroLinhas; i++){
-        scanf("%[^\n]s", equacao);
+    int i = 0;
+    while(1){
+        scanf("%[^\n]", linhaEntrada);
         getchar();
-        Linha linha = parser(equacao, sis);
-        sis->linhas[i] = linha;
+        if(strcasecmp(linhaEntrada, "FIM") == 0) break; //Compara independente se é minuscula ou maiuscula
+        Linha linha = parser(linhaEntrada, sis); //limpa e faz o parse da linha
+        sis->linhas[i++] = linha; //salva a linha parseada no sistema linear
+        numeroLinhas++;
     }
 
     return numeroLinhas;
@@ -99,7 +100,7 @@ Linha parser(char linha[], SistemaLinear *sis){
             sinal = 1;
 
             if(letraCoef + 1 > sis->qtdColunas){
-                sis->qtdColunas = letraCoef + 1; // guarda quantas variaveis
+                sis->qtdColunas = letraCoef + 1; // guarda quantas variaveis (guardandando a posicao da maior)
             }
         }
             
@@ -121,5 +122,28 @@ void limparLixoLinha(Linha *l){
     }
     l->igualdade = 0;
 }
+
+
+int escreverArquivo(){
+    FILE *arq = fopen("Equacoes.txt", "w");
+
+    if(arq == NULL){
+        printf("Arquivo não encontrado\n");
+        return 1;
+    }
+    char linha[100];
+    
+    while(1){
+        scanf("%[^\n]s", linha);
+        getchar();
+        
+        if(strcasecmp(linha, "FIM") == 0) break;
+
+        fprintf(arq, "%s\n", linha);
+    }
+    
+    fclose(arq);
+}
+
 
 
