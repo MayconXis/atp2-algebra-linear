@@ -97,9 +97,12 @@ void instrucoes(){
     printf("Siga essas instruções para que o sistema funcione corretamente:\n");
     printf("\n");
     printf("1. UTILIZE VARIAVEIS SEQUENCIAIS: O sistema aceita todas as letras do alfabeto. Use letras que sejam vizinhas no alfabeto como variaveis.\n");
-    printf("(Ex: 'a, b, c' ou 't, u, v, w, x') Não pule letras. Evite: 'a, x, m'\n\n");
+    printf("\t- (Ex: 'a, b, c' ou 't, u, v, w, x') Não pule letras. Evite: 'a, x, m'\n\n");
     printf("2. ORDEM ALFABETICA: O sistema organizara as matrizes por ordem alfabetica, independente de como você digitar.\n");
-    printf("(Ex: 'y - 2x = 3' sera lido como '-2x + y = 3')\n\n");
+    printf("\t- (Ex: 'y - 2x = 3' sera lido como '-2x + y = 3')\n\n");
+    printf("3. SOBRE FRAÇÕES: O sistema tranforma frações em números decimais.\n");
+    printf("\t- Para isso use frações no formato: '1/2'\n");
+    printf("\t- Evite 'x/2', utilize o padrão '1/2x', fração depois variável.\n");
     printf("\n");
     moldura(150);
 }

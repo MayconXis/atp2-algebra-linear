@@ -92,17 +92,12 @@ void substituicaoReversa(Matriz *matriz, int menorVar) {
         respostas[linha] = soma / ((*matriz).dados[linha][linha]);
     }
     printf("\nSolucao do sistema:\n");
-    char alfabeto[26] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 
+    char variaveis[26] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 
                          'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
     for(int i = 0; i < (*matriz).linhas; i++){
-        printf("%c = %.2f\n", alfabeto[menorVar++], respostas[i]);
+        printf("%c = %.2f\n", variaveis[menorVar++], respostas[i]);
     }
-    // char variaveis[] = {'x', 'y', 'z', 't', 'w'};
-
-    // for (int i = 0; i < (*matriz).linhas; i++) {
-    //     printf("%c = %.2f\n", variaveis[i], respostas[i]);
-    // }
 }
 
 

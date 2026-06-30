@@ -10,10 +10,11 @@ int main() {
     char linha[TAMEQ];
     char variaveis[20];
     Linha lin[10];
-    // instrucoes();
-    // enterPraContinuar();
-    // limparTela();
+    instrucoes();
+    enterPraContinuar();
+    limparTela();
 
+    //fazer loop pra manter o usuario preso no case que escolheu ate querer sair
     while (TRUE) {
         aberturaPrograma();
         int opcao;
@@ -26,8 +27,10 @@ int main() {
                 SistemaLinear sistema;
                 int esc = escolhaEntrada();
                 sistema.qtdLinhas = escolhaLeitura(esc, &sistema);
-                sistema.qtdColunas = sistema.maiorVariavel - sistema.menorVariavel;
                 limparTela();
+                printf("tl colunas %d \n", sistema.qtdColunas);
+                printf("tl maior %d\n", sistema.maiorVariavel);
+                printf("tl menor %d\n", sistema.menorVariavel);
                 cabecalho("Sistema Linear", 85);
                 printarEntrada(sistema.qtdLinhas);
                 printf("\n");
@@ -51,14 +54,12 @@ int main() {
                 SistemaLinear tl;
                 int escolha = escolhaEntrada();
                 tl.qtdLinhas = escolhaLeitura(escolha, &tl);
-                printf("tl colunas %d \n", tl.qtdColunas);
-                tl.qtdColunas = tl.maiorVariavel - tl.menorVariavel;
                 limparTela();
                 Matriz mat = tranformarEmMatriz(tl);
                 printf("tl colunas %d \n", tl.qtdColunas);
                 printf("tl maior %d\n", tl.maiorVariavel);
                 printf("tl menor %d\n", tl.menorVariavel);
-                
+
                 cabecalho("Transformação Linear", 90);
 
                 printarEntrada(tl.qtdColunas);

@@ -34,6 +34,9 @@ Linha parser(char linha[], SistemaLinear *sis){
     int sinal = 1;
     int linhaTam = strlen(linha);
 
+    int barraApareceu = FALSE;
+    int coefDepoisBarra = 0;
+
     
     for(int j = 0; j < linhaTam; j++){
         int caractere = (int) linha[j];
@@ -45,12 +48,21 @@ Linha parser(char linha[], SistemaLinear *sis){
 
         if(caractere >= '0' && caractere <= '9') isNumero = TRUE;
             else isNumero = FALSE;
-                
+
+        if(caractere == '/'){
+            barraApareceu = TRUE;
+            continue;
+        }
+
         if(coeficiente == 0 && (isLetra)){ //Quando o digito for oculto ex: -z
             coeficiente = 1;
         }
 
-        if(isNumero){
+        if(barraApareceu && isNumero){
+            coefDepoisBarra *= 10;
+            coefDepoisBarra += (int) caractere - '0';
+        }
+        else if(isNumero){
             coeficiente *= 10; // ganhar uma casa decimal, para numeros > 1 digito
             coeficiente += (int) caractere - '0'; // char = numero - '0' = numero real
         }else if(caractere == '-'){
@@ -60,6 +72,11 @@ Linha parser(char linha[], SistemaLinear *sis){
         }
 
         else if(isLetra){ 
+            if(barraApareceu && coefDepoisBarra != 0){ //evitar divisao por 0
+                coeficiente = (double) coeficiente / coefDepoisBarra;
+                barraApareceu = FALSE;
+                coefDepoisBarra = 0;
+            }
             e.coef[caractere - 'a'] = coeficiente * sinal;
             coeficiente = 0;
             sinal = 1;
@@ -73,8 +90,13 @@ Linha parser(char linha[], SistemaLinear *sis){
             sinal = 1; // reseta sinal
         } 
     }
-    if(igualdadeApareceu) e.igualdade = coeficiente * sinal;
 
+    if(igualdadeApareceu) {
+        if(barraApareceu && coefDepoisBarra != 0){
+            coeficiente = (double) coeficiente / coefDepoisBarra;
+        }
+        e.igualdade = coeficiente * sinal;
+    }
     return e; //retorna a linha pra salvar no sistema
 }
 
@@ -102,8 +124,7 @@ int lerTerminal(SistemaLinear *sis){
         numeroLinhas++;
     }
 
-    sis->maiorVariavel = sis->maiorVariavel + 1;
-
+    inicializarColunasSL(sis);
     return numeroLinhas;
 }
 
@@ -117,6 +138,7 @@ int lerArquivo(SistemaLinear *sis){
     }
 
     inicializarMaiorMenorSL(sis);
+
     char linhaLida[TAMEQ];
     int i = 0;
     while(fscanf(arq, "%[^\n]", linhaLida) == 1){
@@ -126,7 +148,7 @@ int lerArquivo(SistemaLinear *sis){
     }
     fclose(arq);
 
-    sis->maiorVariavel = sis->maiorVariavel + 1;
+    inicializarColunasSL(sis);
     return i;
 }
 
@@ -154,6 +176,10 @@ int escreverArquivo(){
 void inicializarMaiorMenorSL(SistemaLinear *sis){
     sis->maiorVariavel = -1000;
     sis->menorVariavel = 1000;
+}
+void inicializarColunasSL(SistemaLinear *sis){
+    sis->maiorVariavel = sis->maiorVariavel + 1; //+1 pra subtracao dar o numero certo de colunas
+    sis->qtdColunas = sis->maiorVariavel - sis->menorVariavel; // numero total de colunas da matriz
 }
 
 
