@@ -1,4 +1,4 @@
-#define qtdCoef 3
+#define qtdCoef 26
 typedef struct{
     double coef[qtdCoef];
     double igualdade;
@@ -14,6 +14,8 @@ typedef struct{
     Linha linhas[10];
     int qtdLinhas;
     int qtdColunas;
+    int menorVariavel;
+    int maiorVariavel;
 }SistemaLinear;
 
 typedef enum{

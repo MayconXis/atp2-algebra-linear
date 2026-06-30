@@ -11,18 +11,17 @@ void limparLixoLinha(Linha *e);
 int lerArquivo(SistemaLinear *sis);
 int lerTerminal(SistemaLinear *sis);
 
-int descobrirCoef(char c){
-    char variaveisXYZ[] = "xyz";
-    char variaviesUVW[] = "uvw";
 
-    for(int i = 0; i < 3; i++){
-        if(c == variaveisXYZ[i] || c == variaviesUVW[i]){
-            return i;
-        }
+
+char linhasPrint[10][TAMEQ];
+
+void printarEntrada(int numeroLinhas){
+    printf("Entrada:\n");
+    for(int i = 0; i < numeroLinhas; i++){
+        printf("\t%s\n", linhasPrint[i]);
     }
-    return -1;
+    printf("\n");
 }
-
 
 Linha parser(char linha[], SistemaLinear *sis){
     Linha e; // expressão ou equação
@@ -35,6 +34,7 @@ Linha parser(char linha[], SistemaLinear *sis){
     int sinal = 1;
     int linhaTam = strlen(linha);
 
+    
     for(int j = 0; j < linhaTam; j++){
         int caractere = (int) linha[j];
 
@@ -60,14 +60,11 @@ Linha parser(char linha[], SistemaLinear *sis){
         }
 
         else if(isLetra){ 
-            int letraCoef = descobrirCoef(caractere); //retorna posicao do coef pra salvar o numero
-            e.coef[letraCoef] = coeficiente * sinal; // x/u = 0, y/v = 1, z/w = 2
+            e.coef[caractere - 'a'] = coeficiente * sinal;
             coeficiente = 0;
             sinal = 1;
-
-            if(letraCoef + 1 > sis->qtdColunas){
-                sis->qtdColunas = letraCoef + 1; // guarda quantas variaveis (guardandando a posicao da maior)
-            }
+            if(caractere - 'a' < sis->menorVariavel) sis->menorVariavel = caractere - 'a';
+            if(caractere - 'a' > sis->maiorVariavel) sis->maiorVariavel = caractere - 'a';
         }
             
         else if(caractere == '='){
@@ -93,15 +90,19 @@ int lerTerminal(SistemaLinear *sis){
     int numeroLinhas = 0;
     char linhaEntrada[TAMEQ];
 
+    inicializarMaiorMenorSL(sis);
     int i = 0;
     while(1){
         scanf("%[^\n]", linhaEntrada);
-        getchar();
+        getchar();        
         if(strcasecmp(linhaEntrada, "FIM") == 0) break; //Compara independente se é minuscula ou maiuscula
+        strcpy(linhasPrint[i], linhaEntrada); //Guarda pra printar pro usuario
         Linha linha = parser(linhaEntrada, sis); //limpa e faz o parse da linha
         sis->linhas[i++] = linha; //salva a linha parseada no sistema linear
         numeroLinhas++;
     }
+
+    sis->maiorVariavel = sis->maiorVariavel + 1;
 
     return numeroLinhas;
 }
@@ -115,13 +116,17 @@ int lerArquivo(SistemaLinear *sis){
         return 0;
     }
 
+    inicializarMaiorMenorSL(sis);
     char linhaLida[TAMEQ];
     int i = 0;
     while(fscanf(arq, "%[^\n]", linhaLida) == 1){
         fgetc(arq); //Pega o \n que ficou no arquivo
+        strcpy(linhasPrint[i], linhaLida);
         sis->linhas[i++] = parser(linhaLida, sis); //salva a linha parseada no sistema e incrementa i
     }
     fclose(arq);
+
+    sis->maiorVariavel = sis->maiorVariavel + 1;
     return i;
 }
 
@@ -144,6 +149,11 @@ int escreverArquivo(){
     }
     
     fclose(arq);
+}
+
+void inicializarMaiorMenorSL(SistemaLinear *sis){
+    sis->maiorVariavel = -1000;
+    sis->menorVariavel = 1000;
 }
 
 

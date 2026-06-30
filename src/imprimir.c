@@ -89,3 +89,22 @@ void cabecalho(char texto[], int tamMoldura){
     moldura(tamMoldura);
 }
 
+void instrucoes(){
+    moldura(150);
+    printf("\t\t\t\t\tBEM VINDOS AO PROGRAMA DE ALGEBRA LINEAR\n");
+    moldura(150);
+    printf("Abaixo se encontram algumas instruções de uso do programa!\n");
+    printf("Siga essas instruções para que o sistema funcione corretamente:\n");
+    printf("\n");
+    printf("1. UTILIZE VARIAVEIS SEQUENCIAIS: O sistema aceita todas as letras do alfabeto. Use letras que sejam vizinhas no alfabeto como variaveis.\n");
+    printf("(Ex: 'a, b, c' ou 't, u, v, w, x') Não pule letras. Evite: 'a, x, m'\n\n");
+    printf("2. ORDEM ALFABETICA: O sistema organizara as matrizes por ordem alfabetica, independente de como você digitar.\n");
+    printf("(Ex: 'y - 2x = 3' sera lido como '-2x + y = 3')\n\n");
+    printf("\n");
+    moldura(150);
+}
+
+void printarEntradas(){
+    
+}
+

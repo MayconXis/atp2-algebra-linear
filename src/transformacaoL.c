@@ -19,3 +19,4 @@ int linhasUteis(Matriz m){ //Dimensao da imagem
     }
     return uteis;
 }
+

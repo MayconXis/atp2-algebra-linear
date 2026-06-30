@@ -10,7 +10,9 @@ int main() {
     char linha[TAMEQ];
     char variaveis[20];
     Linha lin[10];
-
+    // instrucoes();
+    // enterPraContinuar();
+    // limparTela();
 
     while (TRUE) {
         aberturaPrograma();
@@ -22,12 +24,12 @@ int main() {
             case 1: {
                 cabecalho("Sistema Linear", 85);
                 SistemaLinear sistema;
-                sistema.qtdColunas = 0;
                 int esc = escolhaEntrada();
                 sistema.qtdLinhas = escolhaLeitura(esc, &sistema);
+                sistema.qtdColunas = sistema.maiorVariavel - sistema.menorVariavel;
                 limparTela();
                 cabecalho("Sistema Linear", 85);
-
+                printarEntrada(sistema.qtdLinhas);
                 printf("\n");
                 printf("Sistema Linear -> Matriz Aumentada:\n");
                 printarSistemaLinear(sistema);
@@ -47,13 +49,19 @@ int main() {
                 scanf("%d %d", &DimE, &DimS);
                 getchar();
                 SistemaLinear tl;
-                tl.qtdColunas = 0;
                 int escolha = escolhaEntrada();
                 tl.qtdLinhas = escolhaLeitura(escolha, &tl);
-
+                printf("tl colunas %d \n", tl.qtdColunas);
+                tl.qtdColunas = tl.maiorVariavel - tl.menorVariavel;
                 limparTela();
                 Matriz mat = tranformarEmMatriz(tl);
+                printf("tl colunas %d \n", tl.qtdColunas);
+                printf("tl maior %d\n", tl.maiorVariavel);
+                printf("tl menor %d\n", tl.menorVariavel);
+                
                 cabecalho("Transformação Linear", 90);
+
+                printarEntrada(tl.qtdColunas);
 
                 printf("Formato de Matriz Tranformacão Linear R%d -> R%d:\n", DimE, DimS);
                 printarMatriz(mat);
@@ -134,6 +142,8 @@ int main() {
                 v5.dados[1][0] = 2; v5.dados[1][1] = 4; v5.dados[1][2] = 1;
                 v5.dados[2][0] = 3; v5.dados[2][1] = 6; v5.dados[2][2] = 1;
                 verificarBase(v5, 3);
+            } break;
+            case 4: {
             } break;
 
             case 5: {

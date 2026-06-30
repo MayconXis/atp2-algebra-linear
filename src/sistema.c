@@ -1,6 +1,8 @@
 
 Matriz aumentarMatriz(SistemaLinear sis) {
     Matriz aumentada;
+    int primeiraVariavel = sis.menorVariavel; // indice da primeira variavel
+
     int linha = sis.qtdLinhas;
     int colunaAumentada = sis.qtdColunas + 1;
 
@@ -8,12 +10,13 @@ Matriz aumentarMatriz(SistemaLinear sis) {
     aumentada.colunas = colunaAumentada;
 
     for (int i = 0; i < linha; i++) {
-        for (int j = 0; j < colunaAumentada - 1; j++) {
+        int indiceVariavel = primeiraVariavel;
+        for (int j = 0; j < colunaAumentada - 1; j++) { //roda exatamente o numero de colunas sem contar a igualdade
             //copia todos os coeficientes de A
-            aumentada.dados[i][j] = sis.linhas[i].coef[j];
+            aumentada.dados[i][j] = sis.linhas[i].coef[indiceVariavel++]; //salva o valor da variavel na coluna e incrementa
         }
         //coloca na última coluna o valor de b (tudo depois do = )
-        aumentada.dados[i][colunaAumentada - 1] = sis.linhas[i].igualdade;
+        aumentada.dados[i][colunaAumentada - 1] = sis.linhas[i].igualdade; // acrescenta a parte aumentada
     }
     return aumentada;
 }
@@ -71,7 +74,7 @@ TipoSolucao verificarSolucao(Matriz *matriz) {
     return SOLUCAO_UNICA;
 }
 
-void substituicaoReversa(Matriz *matriz) {
+void substituicaoReversa(Matriz *matriz, int menorVar) {
     double respostas[10];
     int ultima_coluna = (*matriz).colunas - 1;
 
@@ -89,11 +92,17 @@ void substituicaoReversa(Matriz *matriz) {
         respostas[linha] = soma / ((*matriz).dados[linha][linha]);
     }
     printf("\nSolucao do sistema:\n");
-    char variaveis[] = {'x', 'y', 'z', 't', 'w'};
+    char alfabeto[26] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 
+                         'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
-    for (int i = 0; i < (*matriz).linhas; i++) {
-        printf("%c = %.2f\n", variaveis[i], respostas[i]);
+    for(int i = 0; i < (*matriz).linhas; i++){
+        printf("%c = %.2f\n", alfabeto[menorVar++], respostas[i]);
     }
+    // char variaveis[] = {'x', 'y', 'z', 't', 'w'};
+
+    // for (int i = 0; i < (*matriz).linhas; i++) {
+    //     printf("%c = %.2f\n", variaveis[i], respostas[i]);
+    // }
 }
 
 
@@ -108,7 +117,7 @@ void resolverSistema(SistemaLinear sistema) {
         printf("Não há contradições no sistema\n");
         printf("O número de equações validas (%d) = número de variáveis (%d)\n", linhasU, aumentada.colunas - 1);
         printf("Portanto -> Sistema Possivel e Determinado (Solução Única)\n");
-        substituicaoReversa(&aumentada);
+        substituicaoReversa(&aumentada, sistema.menorVariavel);
     } else if (solucao == INFINITAS_SOLUCOES) {
         printf("\n");
         printf("Não há contradições no sistema\n");
@@ -127,8 +136,9 @@ Matriz tranformarEmMatriz(SistemaLinear sistema){
     matriz.linhas = sistema.qtdLinhas;
     matriz.colunas = sistema.qtdColunas;
     for(int i = 0; i < matriz.linhas; i++){
+        int primeiraVariavel = sistema.menorVariavel;
         for(int j = 0; j < matriz.colunas; j++){
-            matriz.dados[i][j] = sistema.linhas[i].coef[j];
+            matriz.dados[i][j] = sistema.linhas[i].coef[primeiraVariavel++];
         }      
     }
     return matriz;
@@ -231,11 +241,11 @@ int linhasNulasPI(Matriz m){
 
 
 void printarSistemaLinear(SistemaLinear sistema){
-    int ultimaColuna = sistema.qtdColunas - 1;
     for(int i = 0; i < sistema.qtdLinhas; i++){
+        int primeiraVariavel = sistema.menorVariavel;
         printf("\t");
         for(int j = 0; j < sistema.qtdColunas; j++){
-            printf("%.2f ", sistema.linhas[i].coef[j]);
+            printf("%.2f ", sistema.linhas[i].coef[primeiraVariavel++]);
         }
         printf("| %.2f\n", sistema.linhas[i].igualdade);
     } 
