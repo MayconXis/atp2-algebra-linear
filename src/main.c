@@ -4,6 +4,7 @@
 #include "imprimir.c"
 #include "sistema.c"
 #include "parse.c"
+#include "transformacaoL.c"
 
 int main() {
     char linha[TAMEQ];
@@ -19,26 +20,30 @@ int main() {
         limparTela();
         switch (opcao) {
             case 1: {
-                printf("Sistema Linear: \n");
+                cabecalho("Sistema Linear", 85);
                 SistemaLinear sistema;
                 sistema.qtdColunas = 0;
                 int esc = escolhaEntrada();
                 sistema.qtdLinhas = escolhaLeitura(esc, &sistema);
-                printf("Linhas no arquivo: %d\n", sistema.qtdLinhas);
+                limparTela();
+                cabecalho("Sistema Linear", 85);
 
-                // Matriz matrizAumentada = aumentarMatriz(sistema);
-                // escalonamento(&matrizAumentada);
-                // substituicaoReversa(&matrizAumentada); // Adicionado aqui também
+                printf("\n");
+                printf("Sistema Linear -> Matriz Aumentada:\n");
+                printarSistemaLinear(sistema);
+                printf("\n");
                 resolverSistema(sistema);
+                enterPraContinuar();
+                limparTela();
             }
             break;
 
             case 2: {
-                printf("Transformacao Linear\n");
                 int bijetora = 0, injetora = 0, sobrejetora = 0, nucleo;
                 int DimE; // dimensao entrada
                 int DimS; // dimensao saida
-                printf("Digite a R(entrada) -> R(saida) respectivamente: \n");
+                cabecalho("Transformação Linear", 90);
+                printf("Digite a R(Entrada) -> R(Destino) respectivamente: \n");
                 scanf("%d %d", &DimE, &DimS);
                 getchar();
                 SistemaLinear tl;
@@ -48,18 +53,19 @@ int main() {
 
                 limparTela();
                 Matriz mat = tranformarEmMatriz(tl);
+                cabecalho("Transformação Linear", 90);
 
                 printf("Formato de Matriz Tranformacão Linear R%d -> R%d:\n", DimE, DimS);
                 printarMatriz(mat);
                 printf("\n");
 
                 escalonamento(&mat);
-                int imagem = linhasUteis(mat); //retorna numero de linhas nao nulas, dimensão imagem
+                int imagem = linhasUteis(mat); //retorna numero de linhas nao nulas -> Dimensão imagem
                 printf("\n");
 
                 printf("Após o escalonamento sobrou %d linhas não nulas\n", imagem);
                 printf("Portanto -> Dimensão da imagem -> %d\n", imagem);
-                printf("\n");
+                printf(" \n");
 
                 printf("Informações sobre a Transformação Linear R(%d) -> R(%d):\n", DimE, DimS);
                 sobrejetora = isSobrejetora(imagem, DimS); //verifica se a imagem é igual dimensao destino
@@ -93,7 +99,6 @@ int main() {
                     printf("Transformação Linear não é Sobrejetora e/ou Injetora\n");
                     printf("Portanto -> não é Bijetora\n");
                 }
-                printf("\n");
                 enterPraContinuar();
                 limparTela();
             }

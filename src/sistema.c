@@ -102,12 +102,23 @@ void resolverSistema(SistemaLinear sistema) {
     escalonamento(&aumentada);
     TipoSolucao solucao = verificarSolucao(&aumentada);
 
+    int linhasU = linhasUteis(aumentada);
     if (solucao == SOLUCAO_UNICA) {
+        printf("\n");
+        printf("Não há contradições no sistema\n");
+        printf("O número de equações validas (%d) = número de variáveis (%d)\n", linhasU, aumentada.colunas - 1);
+        printf("Portanto -> Sistema Possivel e Determinado (Solução Única)\n");
         substituicaoReversa(&aumentada);
     } else if (solucao == INFINITAS_SOLUCOES) {
-        printf("Sistema possui infinitas solucoes.\n");
+        printf("\n");
+        printf("Não há contradições no sistema\n");
+        printf("Restaram apenas %d equações validas para %d variáveis após o escalonamento\n", linhasU, aumentada.colunas - 1);
+        printf("Existem variaveis livres, pois número de equações < icógnitas \n");
+        printf("Portanto -> Sistema possui infinitas soluções.\n");
     } else {
-        printf("Sistema impossivel. Nao possui solucao.\n");
+        printf("\nApós o escalonamento restaram linhas zeradas com o resultado diferente de zero.\n");
+        printf("Isso é uma contradicao matematica.\n");
+        printf("Sistema sem solucao (SI).\n");
     }
 }
 
@@ -123,18 +134,6 @@ Matriz tranformarEmMatriz(SistemaLinear sistema){
     return matriz;
 }
 
-int linhasUteis(Matriz m){
-    int uteis = 0;
-    for(int i = 0; i < m.linhas; i++){
-        for(int j = 0; j < m.colunas; j++){
-            if(m.dados[i][j] != 0){
-                uteis++;
-                break;
-            }
-        }
-    }
-    return uteis;
-}
 
 void printarMatriz(Matriz matriz){
     for(int i = 0; i < matriz.linhas; i++){
@@ -144,15 +143,6 @@ void printarMatriz(Matriz matriz){
         }  
         printf("\n");   
     }
-}
-
-int isSobrejetora(int dimensaoImagem, int dimensaoDestino){
-    if(dimensaoDestino == dimensaoImagem) return TRUE;
-    else return FALSE;
-}
-
-int dimensaoNucleo(int dimensaoEntrada, int dimensaoImagem){
-    return dimensaoEntrada - dimensaoImagem;
 }
 
 void escalonamentoVerifBase(Matriz *matriz) {
@@ -223,3 +213,30 @@ int verificarBase(Matriz matriz, int dimensao) {
     }
 }
 
+int linhasNulasPI(Matriz m){
+    int linhasNulas = 0;
+    for(int i = 0; i < m.linhas; i++){
+        int elemento = 0;
+        for(int j = 0; j < m.colunas; j++){
+            if(m.dados[i][j] != 0){
+                elemento = 1;
+                break;
+            }
+        }
+        if(!elemento) linhasNulas++;
+    }
+
+    return linhasNulas;
+}
+
+
+void printarSistemaLinear(SistemaLinear sistema){
+    int ultimaColuna = sistema.qtdColunas - 1;
+    for(int i = 0; i < sistema.qtdLinhas; i++){
+        printf("\t");
+        for(int j = 0; j < sistema.qtdColunas; j++){
+            printf("%.2f ", sistema.linhas[i].coef[j]);
+        }
+        printf("| %.2f\n", sistema.linhas[i].igualdade);
+    } 
+}

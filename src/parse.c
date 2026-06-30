@@ -23,40 +23,6 @@ int descobrirCoef(char c){
     return -1;
 }
 
-int lerArquivo(SistemaLinear *sis){
-    FILE *arq = fopen("Equacoes.txt", "r"); 
-
-    if (arq == NULL){
-        printf("Arquivo não encontrado \n");
-        return 0;
-    }
-
-    char linhaLida[TAMEQ];
-    int i = 0;
-    while(fscanf(arq, " %[^\n]", linhaLida) == 1){
-        fgetc(arq); //Pega o \n que ficou no arquivo
-        sis->linhas[i++] = parser(linhaLida, sis); //salva a linha parseada no sistema e incrementa i
-    }
-    fclose(arq);
-    return i;
-}
-
-int lerTerminal(SistemaLinear *sis){
-    int numeroLinhas = 0;
-    char linhaEntrada[TAMEQ];
-
-    int i = 0;
-    while(1){
-        scanf("%[^\n]", linhaEntrada);
-        getchar();
-        if(strcasecmp(linhaEntrada, "FIM") == 0) break; //Compara independente se é minuscula ou maiuscula
-        Linha linha = parser(linhaEntrada, sis); //limpa e faz o parse da linha
-        sis->linhas[i++] = linha; //salva a linha parseada no sistema linear
-        numeroLinhas++;
-    }
-
-    return numeroLinhas;
-}
 
 Linha parser(char linha[], SistemaLinear *sis){
     Linha e; // expressão ou equação
@@ -123,6 +89,41 @@ void limparLixoLinha(Linha *l){
     l->igualdade = 0;
 }
 
+int lerTerminal(SistemaLinear *sis){
+    int numeroLinhas = 0;
+    char linhaEntrada[TAMEQ];
+
+    int i = 0;
+    while(1){
+        scanf("%[^\n]", linhaEntrada);
+        getchar();
+        if(strcasecmp(linhaEntrada, "FIM") == 0) break; //Compara independente se é minuscula ou maiuscula
+        Linha linha = parser(linhaEntrada, sis); //limpa e faz o parse da linha
+        sis->linhas[i++] = linha; //salva a linha parseada no sistema linear
+        numeroLinhas++;
+    }
+
+    return numeroLinhas;
+}
+
+// Arquivo
+int lerArquivo(SistemaLinear *sis){
+    FILE *arq = fopen("Equacoes.txt", "r"); 
+
+    if (arq == NULL){
+        printf("Arquivo não encontrado \n");
+        return 0;
+    }
+
+    char linhaLida[TAMEQ];
+    int i = 0;
+    while(fscanf(arq, "%[^\n]", linhaLida) == 1){
+        fgetc(arq); //Pega o \n que ficou no arquivo
+        sis->linhas[i++] = parser(linhaLida, sis); //salva a linha parseada no sistema e incrementa i
+    }
+    fclose(arq);
+    return i;
+}
 
 int escreverArquivo(){
     FILE *arq = fopen("Equacoes.txt", "w");
