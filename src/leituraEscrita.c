@@ -3,6 +3,8 @@
 void inicializarMaiorMenorSL(SistemaLinear *sis);
 void inicializarColunasSL(SistemaLinear *sis);
 void informacoesLeitura();
+void limparLinhasPrint();
+void informacoesLeituraBases();
 
 int lerArquivo(SistemaLinear *sis){
     FILE *arq = fopen("Equacoes.txt", "r"); 
@@ -13,6 +15,7 @@ int lerArquivo(SistemaLinear *sis){
     }
 
     inicializarMaiorMenorSL(sis);
+    limparLinhasPrint();
 
     char linhaLida[TAMEQ];
     int i = 0;
@@ -86,6 +89,7 @@ int lerTerminal(SistemaLinear *sis){
     char linhaEntrada[TAMEQ];
 
     inicializarMaiorMenorSL(sis);
+    limparLinhasPrint();
     int i = 0;
     while(1){
         scanf("%[^\n]", linhaEntrada);

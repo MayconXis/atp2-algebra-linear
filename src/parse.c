@@ -18,6 +18,11 @@ void printarEntrada(int numeroLinhas){
     }
     printf("\n");
 }
+void limparLinhasPrint(){
+    for(int i = 0; i < 10; i++){
+        linhasPrint[i][0] = '\0';
+    }
+}
 
 Linha parser(char linha[], SistemaLinear *sis){
     Linha e; // expressão ou equação
@@ -112,6 +117,7 @@ void limparLixoLinha(Linha *l){
     }
     l->igualdade = 0;
 }
+
 
 
 
