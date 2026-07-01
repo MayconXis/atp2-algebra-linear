@@ -1,3 +1,5 @@
+int lerArquivo(SistemaLinear *sis);
+int lerTerminal(SistemaLinear *sis);
 
 void imprimir_matriz(Matriz m) {
     for (int i = 0; i < m.linhas; i++) {
@@ -64,6 +66,15 @@ void moldura(int qtd){
     printf("\n");
 }
 
+void informacoesLeitura(){
+    printf("\t- Digite cada LINHA DE ENTRADA uma abaixo da outra -\n");
+    printf("\t- ESCREVA 'FIM' PARA TERMINAR A LEITURA -\n");
+}
+
+void informacoesLeituraBases(){
+    printf("\t- Digite cada VETOR uma abaixo da outro -\n");
+}
+
 int escolhaLeitura(int esc, SistemaLinear *sis) {
     if (esc == 1) {
         return lerArquivo(sis);
@@ -78,10 +89,7 @@ int escolhaLeitura(int esc, SistemaLinear *sis) {
     }
 }
 
-void informacoesLeitura(){
-    printf("\t- Digite cada LINHA DE ENTRADA uma abaixo da outra -\n");
-    printf("\t- ESCREVA 'FIM' PARA TERMINAR A LEITURA -\n");
-}
+
 
 void cabecalho(char texto[], int tamMoldura){
     moldura(tamMoldura);
@@ -104,10 +112,11 @@ void instrucoes(){
     printf("\t- Para isso use frações no formato: '1/2'\n");
     printf("\t- Evite 'x/2', utilize o padrão '1/2x', fração depois variável.\n");
     printf("\n");
+    printf("4. BASES: para conjuntos entre com valores diretos.\n");
+    printf("\t- Evite: {(2, 1), (1,3)}.\n");
+    printf("\t- Utilize: 2 1 1 3 separados por espaço\n");
+
     moldura(150);
 }
 
-void printarEntradas(){
-    
-}
 

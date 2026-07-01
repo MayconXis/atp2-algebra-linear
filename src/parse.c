@@ -5,13 +5,10 @@
 
 
 Linha parser(char equacao[], SistemaLinear *sis);
-int descobrirCoef(char c);
 void limparLixoLinha(Linha *e);
-
+void informacoesLeitura();
 int lerArquivo(SistemaLinear *sis);
 int lerTerminal(SistemaLinear *sis);
-
-
 
 char linhasPrint[10][TAMEQ];
 
@@ -100,6 +97,45 @@ Linha parser(char linha[], SistemaLinear *sis){
     return e; //retorna a linha pra salvar no sistema
 }
 
+void lerTerminalNumeros(Matriz *mat) {
+    printf("Escreva abaixo os %d vetores (com %d numeros cada):\n", mat->linhas, mat->colunas);
+    informacoesLeituraBases();
+    for(int i = 0; i < mat->linhas; i++){
+        for(int j = 0; j < mat->colunas; j++){ 
+            double numero;
+            scanf("%lf", &numero);
+            mat->dados[i][j] = numero;
+        }
+    }
+}
+
+int lerArquivoNumeros(Matriz *mat){
+    FILE *arq = fopen("Equacoes.txt", "r");
+
+    if (arq == NULL){
+        printf("Arquivo não encontrado \n");
+        return 0;
+    }
+
+    for(int i = 0; i < mat->linhas; i++){
+        for(int j = 0; j < mat->colunas; j++){ 
+            double numero;
+            fscanf(arq, "%lf", &numero);
+            mat->dados[i][j] = numero;
+        }
+    }
+
+    fclose(arq);
+}
+
+void inicializarMaiorMenorSL(SistemaLinear *sis){
+    sis->maiorVariavel = -1000;
+    sis->menorVariavel = 1000;
+}
+void inicializarColunasSL(SistemaLinear *sis){
+    sis->maiorVariavel = sis->maiorVariavel + 1; //+1 pra subtracao dar o numero certo de colunas
+    sis->qtdColunas = sis->maiorVariavel - sis->menorVariavel; // numero total de colunas da matriz
+}
 
 void limparLixoLinha(Linha *l){
     for(int i = 0; i < qtdCoef; i++){
@@ -128,6 +164,7 @@ int lerTerminal(SistemaLinear *sis){
     return numeroLinhas;
 }
 
+
 // Arquivo
 int lerArquivo(SistemaLinear *sis){
     FILE *arq = fopen("Equacoes.txt", "r"); 
@@ -152,6 +189,44 @@ int lerArquivo(SistemaLinear *sis){
     return i;
 }
 
+int escreverArquivoBases(){
+    FILE *arq = fopen("Equacoes.txt", "w");
+
+    if(arq == NULL){
+        printf("Arquivo não encontrado\n");
+        return 1;
+    }
+
+    int dimensao;
+    printf("Informe a dimensao do espaco (ex: 2 para R2, 3 para R3):\n");
+    scanf("%d", &dimensao);
+    getchar();
+
+    
+    int qtdVet;
+    printf("informe quantos vetores (linhas) voce quer colocar no arquivo:\n");
+    scanf("%d", &qtdVet);
+    getchar();
+
+    
+    double valores;
+    
+    informacoesLeituraBases();
+    
+    for(int i = 0; i < qtdVet; i++){
+        for(int j = 0; j < dimensao; j++){
+            scanf("%lf", &valores);
+            fprintf(arq, "%.2f ", valores);
+        }
+        fprintf(arq, "\n");
+    }
+        
+    fclose(arq);
+}
+    
+    
+
+
 int escreverArquivo(){
     FILE *arq = fopen("Equacoes.txt", "w");
 
@@ -173,14 +248,7 @@ int escreverArquivo(){
     fclose(arq);
 }
 
-void inicializarMaiorMenorSL(SistemaLinear *sis){
-    sis->maiorVariavel = -1000;
-    sis->menorVariavel = 1000;
-}
-void inicializarColunasSL(SistemaLinear *sis){
-    sis->maiorVariavel = sis->maiorVariavel + 1; //+1 pra subtracao dar o numero certo de colunas
-    sis->qtdColunas = sis->maiorVariavel - sis->menorVariavel; // numero total de colunas da matriz
-}
+
 
 
 

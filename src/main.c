@@ -1,10 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+
 #include "matrizStruct.c"
 #include "imprimir.c"
 #include "sistema.c"
 #include "parse.c"
 #include "transformacaoL.c"
+
 
 int main() {
     char linha[TAMEQ];
@@ -110,41 +113,74 @@ int main() {
                 }
                 enterPraContinuar();
                 limparTela();
-            }
-            break;
+            }break;
             case 3: {
-                printf("=== TESTE V1: {(2,1), (1,3)} - base de R2? SIM ===\n");
-                Matriz v1;
-                v1.linhas = 2; v1.colunas = 2;
-                v1.dados[0][0] = 2; v1.dados[0][1] = 1;
-                v1.dados[1][0] = 1; v1.dados[1][1] = 3;
-                verificarBase(v1, 2);
+                limparTela();
+                cabecalho("Verificar bases", 80);
 
-                printf("\n=== TESTE V2: {(1,1), (2,2), (1,0)} - base de R2? NAO ===\n");
-                Matriz v2;
-                v2.linhas = 3; v2.colunas = 2;
-                v2.dados[0][0] = 1; v2.dados[0][1] = 1;
-                v2.dados[1][0] = 2; v2.dados[1][1] = 2;
-                v2.dados[2][0] = 1; v2.dados[2][1] = 0;
-                verificarBase(v2, 2);
+                int dimensao;
+                printf("Informe a dimensao do espaco (ex: 2 para R2, 3 para R3):\n");
+                scanf("%d", &dimensao);
+                getchar();
 
-                printf("\n=== TESTE V4: {(1,0,1), (0,1,-1), (2,1,0)} - base de R3? SIM ===\n");
-                Matriz v4;
-                v4.linhas = 3; v4.colunas = 3;
-                v4.dados[0][0] = 1; v4.dados[0][1] = 0; v4.dados[0][2] = 1;
-                v4.dados[1][0] = 0; v4.dados[1][1] = 1; v4.dados[1][2] = -1;
-                v4.dados[2][0] = 2; v4.dados[2][1] = 1; v4.dados[2][2] = 0;
-                verificarBase(v4, 3);
+                Matriz vetores;
+                vetores.colunas = dimensao;
 
-                printf("\n=== TESTE V5: {(1,2,0), (2,4,1), (3,6,1)} - base de R3? NAO ===\n");
-                Matriz v5;
-                v5.linhas = 3; v5.colunas = 3;
-                v5.dados[0][0] = 1; v5.dados[0][1] = 2; v5.dados[0][2] = 0;
-                v5.dados[1][0] = 2; v5.dados[1][1] = 4; v5.dados[1][2] = 1;
-                v5.dados[2][0] = 3; v5.dados[2][1] = 6; v5.dados[2][2] = 1;
-                verificarBase(v5, 3);
+                int qtdVetores;
+                printf("Quantos vetores voce quer testar?\n");
+                scanf("%d", &qtdVetores);
+                getchar();
+
+                vetores.linhas = qtdVetores;
+
+                int escBases = escolhaEntrada();
+                if (escBases == 1) {
+                    lerArquivoNumeros(&vetores);
+                } else if (escBases == 2) {
+                    lerTerminalNumeros(&vetores);
+                } else {
+                    printf("Opcao invalida!\n");
+                    enterPraContinuar();
+                    break; 
+                }
+                limparTela();
+                printf("Matriz formada pelos vetores do R%d:\n", dimensao);
+                printarMatriz(vetores);
+                printf("\n");
+
+                printf("--- Iniciando Testes de Base ---\n");
+                
+               
+                int resultado = verificarBase(vetores, dimensao);
+
+                printf("\n");
+                moldura(50);
+                if (resultado == TRUE) {
+                    printf(" RESULTADO FINAL: FORMA UMA BASE DO R%d!\n", dimensao);
+                } else {
+                    printf(" RESULTADO FINAL: NAO FORMA UMA BASE DO R%d!\n", dimensao);
+                }
+                moldura(50);
+                
+                enterPraContinuar();
+                limparTela();
             } break;
             case 4: {
+                cabecalho("Autovalores e Autovetores", 85);
+                SistemaLinear av;
+                int e = escolhaEntrada(); //escolha
+                av.qtdLinhas = escolhaLeitura(e, &av);
+                limparTela();
+                cabecalho("Autovalores e Autovetores", 85);
+                printarEntrada(av.qtdLinhas);
+                printf("Formato de matriz:\n");
+                Matriz matrizAutov = tranformarEmMatriz(av);
+                printarMatriz(matrizAutov);
+                printf("\n");
+                autoValores(matrizAutov);
+                enterPraContinuar();
+                limparTela();
+                
             } break;
 
             case 5: {
@@ -176,9 +212,18 @@ int main() {
 
             case 6:
             moldura(80);
-            informacoesLeitura();
-            moldura(80);
-            escreverArquivo();
+            int opcao;
+            printf("[1] - Entrada para Sistemas, Transformacoes e Autovetores\n");
+            printf("[2] - Bases\n");
+            scanf("%d",  &opcao);
+            getchar();
+            if(opcao == 1){
+                informacoesLeitura();
+                moldura(80);
+                escreverArquivo();
+            }else if(opcao == 2){
+                escreverArquivoBases();
+            }
             enterPraContinuar();
             limparTela();
             break;
