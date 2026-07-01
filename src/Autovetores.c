@@ -1,6 +1,5 @@
-#include <math.h>
 void imprimir_matriz(Matriz m);
-void escalonamento(Matriz *matriz);
+void escalonamentoVerifBase(Matriz *matriz);
 
 
 Matriz igualarZero(Matriz mat){
@@ -35,14 +34,14 @@ Autovetor autoVetor(Matriz matrizOriginal, double lambda){
     printf("Matriz (Diagonal Principal) - Lambda %.2f:\n", lambda);
     imprimir_matriz(autoVetor);
     printf("\n");
-    
+
     autoVetor = igualarZero(autoVetor);
     printf("Matriz igualada a zero:\n");
     imprimir_matriz(autoVetor);
     printf("\n");
-    escalonamento(&autoVetor);
+    escalonamentoVerifBase(&autoVetor);
     printf("\n");
-    printf("Matriz após o escalonamento:\n");
+    printf("Matriz apos o escalonamento:\n");
     imprimir_matriz(autoVetor);
     printf("\n");
 
@@ -51,8 +50,8 @@ Autovetor autoVetor(Matriz matrizOriginal, double lambda){
     double elementoB = autoVetor.dados[0][1];
 
     double x, y;
-    
-    
+
+
     if(elementoA != 0){ //Evitar divisao por zero
         y = 1.0; //
         printf("Variavel livre Y assumida como 1\n");
@@ -65,13 +64,13 @@ Autovetor autoVetor(Matriz matrizOriginal, double lambda){
         x = 1;
         y = 0;
     }
-    
+
     printf("Autovetor V = (%.2f, %.2f)\n", x, y);
 
     Autovetor av; //retornar pra diagonalizacao
     av.x = x;
     av.y = y;
-    return av; 
+    return av;
 }
 
 void autoValores(Matriz matriz){
@@ -101,7 +100,7 @@ void autoValores(Matriz matriz){
         }
     }
 
-    
+
     double coefA = 1.0;
     double coefB = -traco; //Seria o jogo de sinal pra isolar o lambda -(a + d) . Lambda
     determinante = diagPrincipal - diagSecundaria; //coef C
@@ -112,10 +111,10 @@ void autoValores(Matriz matriz){
     printf("\n");
 
     printf("Calculo do Determinante (Diagonal Principal - Secundaria)\n");
-    printf("Determinante = (%.2f * %.2f) - (%.2f * %.2f)\n", 
+    printf("Determinante = (%.2f * %.2f) - (%.2f * %.2f)\n",
         matriz.dados[0][0], matriz.dados[1][1], matriz.dados[0][1], matriz.dados[1][0]);
     printf("Determinante = %.2f - %.2f = %.2f\n\n", diagPrincipal, diagSecundaria, determinante);
-    
+
     //Delta = b² - 4.a.c
     double delta = (coefB * coefB) - (4 * coefA * determinante);
     printf("Calculando Delta (B² - 4*A*C) -> (%.2f)² - 4 * (1.00) * (%.2f)\n\n", coefB, determinante);
@@ -123,7 +122,7 @@ void autoValores(Matriz matriz){
     if(delta < 0){
         printf("Delta = %.2f\n", delta);
         printf("Delta resultou em um valor negativo.\n");
-        printf("Portanto -> Não existem autovalores reais.\n");
+        printf("Portanto -> Nao existem autovalores reais.\n");
     }
     else if(delta == 0){
         double lambda = -coefB / (2 * coefA);
@@ -192,7 +191,7 @@ void diagonalizarMatriz(Matriz matriz) {
     printf("Autovalores encontrados: L1 = %.2f, L2 = %.2f\n\n", lambda1, lambda2);
 
     printf("----- Autovetor L1: -----\n\n");
-    
+
     Autovetor v1 = autoVetor(matriz, lambda1);
     printf("\n");
     printf("----- Autovetor L2: -----\n\n");

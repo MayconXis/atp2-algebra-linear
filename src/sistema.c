@@ -115,19 +115,19 @@ void resolverSistema(SistemaLinear sistema) {
     int linhasU = linhasUteis(aumentada);
     if (solucao == SOLUCAO_UNICA) {
         printf("\n");
-        printf("Não há contradições no sistema\n");
-        printf("O número de equações validas (%d) = número de variáveis (%d)\n", linhasU, aumentada.colunas - 1);
-        printf("Portanto -> Sistema Possivel e Determinado (Solução Única)\n");
+        printf("Nao ha contradicoes no sistema\n");
+        printf("O numero de equacoes validas (%d) = numero de variaveis (%d)\n", linhasU, aumentada.colunas - 1);
+        printf("Portanto -> Sistema Possivel e Determinado (Solução Unica)\n");
         substituicaoReversa(&aumentada, sistema.menorVariavel);
     } else if (solucao == INFINITAS_SOLUCOES) {
         printf("\n");
-        printf("Não há contradições no sistema\n");
-        printf("Restaram apenas %d equações validas para %d variáveis após o escalonamento\n", linhasU, aumentada.colunas - 1);
-        printf("Existem variaveis livres, pois número de equações < icógnitas \n");
-        printf("Portanto -> Sistema possui infinitas soluções.\n");
+        printf("Nao ha contradicoes no sistema\n");
+        printf("Restaram apenas %d equacoes validas para %d variaveis apos o escalonamento\n", linhasU, aumentada.colunas - 1);
+        printf("Existem variaveis livres, pois numero de equacoes < icognitas \n");
+        printf("Portanto -> Sistema possui infinitas solucoes.\n");
     } else {
-        printf("\nApós o escalonamento restaram linhas zeradas com o resultado diferente de zero.\n");
-        printf("Isso é uma contradicao matematica.\n");
+        printf("\nApos o escalonamento restaram linhas zeradas com o resultado diferente de zero.\n");
+        printf("Isso e uma contradicao matematica.\n");
         printf("Sistema sem solucao (SI).\n");
     }
 }

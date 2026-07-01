@@ -71,7 +71,7 @@ int main() {
 
                     printarEntrada(tl.qtdColunas);
 
-                    printf("Formato de Matriz Tranformacão Linear R%d -> R%d:\n", DimE, DimS);
+                    printf("Formato de Matriz Tranformacao Linear R%d -> R%d:\n", DimE, DimS);
                     printarMatriz(mat);
                     printf("\n");
 
@@ -79,41 +79,41 @@ int main() {
                     int imagem = linhasUteis(mat); //retorna numero de linhas nao nulas -> Dimensão imagem
                     printf("\n");
 
-                    printf("Após o escalonamento sobrou %d linhas não nulas\n", imagem);
+                    printf("Apos o escalonamento sobrou %d linhas nao nulas\n", imagem);
                     printf("Portanto -> Dimensão da imagem -> %d\n", imagem);
                     printf(" \n");
 
-                    printf("Informações sobre a Transformação Linear R(%d) -> R(%d):\n", DimE, DimS);
+                    printf("Informacoes sobre a Transformacao Linear R(%d) -> R(%d):\n", DimE, DimS);
                     sobrejetora = isSobrejetora(imagem, DimS); //verifica se a imagem é igual dimensao destino
                     if(sobrejetora){
-                        printf("Dimensão da imagem (%d) = Dimensão de destino (%d)\n", imagem, DimS);
+                        printf("Dimensao da imagem (%d) = Dimensao de destino (%d)\n", imagem, DimS);
                         printf("Portanto -> Sobrejetora\n");
                     }else{
-                        printf("Dimensão da imagem (%d) != Dimensão de destino (%d)\n", imagem, DimS);
-                        printf("Portanto -> não é Sobrejetora\n");
+                        printf("Dimensao da imagem (%d) != Dimensao de destino (%d)\n", imagem, DimS);
+                        printf("Portanto -> nao e Sobrejetora\n");
                     }
                     printf("\n");
 
                     nucleo = dimensaoNucleo(DimE, imagem);
-                    printf("Dimensão do nucleo = Dimensão de entrada - Dimensão da imagem\n");
-                    printf("Dimensão do nucleo = %d - %d | Resultado = %d\n", DimE, imagem, DimE-imagem);
+                    printf("Dimensao do nucleo = Dimensao de entrada - Dimensao da imagem\n");
+                    printf("Dimensao do nucleo = %d - %d | Resultado = %d\n", DimE, imagem, DimE-imagem);
 
                     if(nucleo == 0){
-                        printf("Dimensão núcleo = 0\n");
+                        printf("Dimensao nucleo = 0\n");
                         printf("Portanto -> Injetora\n");
                         injetora = 1;
                     }else{
-                        printf("Dimensão núcleo > 0\n");
-                        printf("Portanto -> Não é Injetora\n");
+                        printf("Dimensao nucleo > 0\n");
+                        printf("Portanto -> Nao e Injetora\n");
                     }
 
                     printf("\n");
                     if(sobrejetora && injetora){
-                        printf("Transformação Linear é Sobrejetora e Injetora\n");
+                        printf("Transformacao Linear e Sobrejetora e Injetora\n");
                         printf("Portanto -> Bijetora\n");
                     }else{
-                        printf("Transformação Linear não é Sobrejetora e/ou Injetora\n");
-                        printf("Portanto -> não é Bijetora\n");
+                        printf("Transformacao Linear nao e Sobrejetora e/ou Injetora\n");
+                        printf("Portanto -> nao e Bijetora\n");
                     }
                     enterPraContinuar();
                     limparTela();
@@ -126,7 +126,6 @@ int main() {
                 do{
                     limparTela();
                     cabecalho("Verificar bases", 80);
-
                     int dimensao;
                     printf(" - Informe a dimensao do espaco (ex: 2 para R2, 3 para R3):\n");
                     scanf("%d", &dimensao);
@@ -157,8 +156,6 @@ int main() {
                     printf("Matriz formada pelos vetores do R%d:\n", dimensao);
                     printarMatriz(vetores);
                     printf("\n");
-
-                    printf("--- Iniciando Testes de Base ---\n");
                     
                 
                     int resultado = verificarBase(vetores, dimensao);
@@ -166,9 +163,9 @@ int main() {
                     printf("\n");
                     moldura(50);
                     if (resultado == TRUE) {
-                        printf(" RESULTADO FINAL: FORMA UMA BASE DO R%d!\n", dimensao);
+                        printf("Forma uma base do R%d!\n", dimensao);
                     } else {
-                        printf(" RESULTADO FINAL: NAO FORMA UMA BASE DO R%d!\n", dimensao);
+                        printf(" Nao forma uma base do R%d!\n", dimensao);
                     }
                     moldura(50);
                     

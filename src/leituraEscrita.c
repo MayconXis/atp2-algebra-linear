@@ -8,7 +8,7 @@ int lerArquivo(SistemaLinear *sis){
     FILE *arq = fopen("Equacoes.txt", "r"); 
 
     if (arq == NULL){
-        printf("Arquivo não encontrado \n");
+        printf("Arquivo nao encontrado \n");
         return 0;
     }
 
@@ -31,12 +31,12 @@ int escreverArquivoBases(){
     FILE *arq = fopen("Equacoes.txt", "w");
 
     if(arq == NULL){
-        printf("Arquivo não encontrado\n");
+        printf("Arquivo nao encontrado\n");
         return 1;
     }
 
     int dimensao;
-    printf("Informe a dimensao do espaco (ex: 2 para R2, 3 para R3):\n");
+    printf("Informe a dimensao do espaco:\n");
     scanf("%d", &dimensao);
     getchar();
  
@@ -64,7 +64,7 @@ int escreverArquivo(){
     FILE *arq = fopen("Equacoes.txt", "w");
 
     if(arq == NULL){
-        printf("Arquivo não encontrado\n");
+        printf("Arquivo nao encontrado\n");
         return 1;
     }
     char linha[100];
@@ -105,7 +105,7 @@ int lerArquivoNumeros(Matriz *mat){
     FILE *arq = fopen("Equacoes.txt", "r");
 
     if (arq == NULL){
-        printf("Arquivo não encontrado \n");
+        printf("Arquivo nao encontrado \n");
         return 0;
     }
 
