@@ -1,6 +1,7 @@
 int lerArquivo(SistemaLinear *sis);
 int lerTerminal(SistemaLinear *sis);
 
+
 void imprimir_matriz(Matriz m) {
     for (int i = 0; i < m.linhas; i++) {
         for (int j = 0; j < m.colunas; j++) {
@@ -29,7 +30,7 @@ void aberturaPrograma(){
     printf("[2] - Analisar Transformacao Linear\n");
     printf("[3] - Verificar Base de um Espaco Vetorial\n");
     printf("[4] - Calcular Autovalores e Autovetores\n");
-    printf("[5] - Teste automatizado\n");
+    printf("[5] - Diagonalização\n");
     printf("[6] - Escrever no Arquivo\n");
     printf("[0] - Sair\n");
 }
@@ -114,9 +115,19 @@ void instrucoes(){
     printf("\n");
     printf("4. BASES: para conjuntos entre com valores diretos.\n");
     printf("\t- Evite: {(2, 1), (1,3)}.\n");
-    printf("\t- Utilize: 2 1 1 3 separados por espaço\n");
-
+    printf("\t- Utilize: 2 1 separados por espaço, e 1 3 na linha debaixo.\n");
     moldura(150);
+}
+
+int continuarNoBloco(char texto[]){
+    int continuar;
+    printf("deseja fazer outra operação em %s\n", texto);
+    printf("[1] - Sim\n");
+    printf("Digite qualquer outro numero pra sair!\n");
+    
+    scanf ("%d", &continuar);
+    getchar();
+    return continuar;
 }
 
 

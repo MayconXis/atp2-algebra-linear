@@ -29,6 +29,11 @@ typedef enum {
 } TipoSolucao;
 
 
+typedef struct{
+    double x;
+    double y;
+}Autovetor;
+
 
 
 
