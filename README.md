@@ -10,12 +10,13 @@ Instituto Federal de Goiás — Campus Inhumas]
 1. [Visão Geral](#visão-geral)
 2. [Estrutura de Arquivos](#estrutura-de-arquivos)
 3. [Como Compilar e Executar](#como-compilar-e-executar)
-4. [Decisões de Projeto](#decisões-de-projeto)
+4. [Decisões de Projeto](#decisoes-de-projeto-e-curiosidades-de-implementacao)
 5. [Estruturas de Dados](#estruturas-de-dados)
 6. [Funcionalidades](#funcionalidades)
 7. [Formatos de Entrada](#formatos-de-entrada)
 8. [Exemplos de Uso](#exemplos-de-uso)
 9. [Limitações Conhecidas](#limitações-conhecidas)
+10. [Desenvolvedores](#desenvolvedores)
 
 ---
 
@@ -99,11 +100,11 @@ O executável deve estar na mesma pasta que o arquivo `Equacoes.txt`.
 
 ---
 
-## Decisões de Projeto e Curiosidades de Implementação
+## Decisoes de Projeto e Curiosidades de Implementacao
 
 ### Desenvolvimento em dupla e divisão de responsabilidades
 
-O projeto foi desenvolvido em programação colaborativa, com dois desenvolvedores trabalhando em paralelo sobre os mesmos arquivos base. Para evitar conflitos, a divisão foi feita por módulo: um desenvolvedor ficou responsável pelos módulos matemáticos (escalonamento, verificação de solução, bases, autovalores e diagonalização) e o outro pela entrada de dados (parser de equações, leitura de arquivo e terminal, interface visual).
+O projeto foi desenvolvido em programação colaborativa, com dois desenvolvedores trabalhando em paralelo sobre os mesmos arquivos base. Para evitar conflitos, a divisão foi feita por módulo: um desenvolvedor ficou responsável pelos módulos matemáticos (escalonamento, verificação de solução, bases, autovalores e diagonalização) e o outro pela entrada de dados (parser de equações, leitura de arquivo e terminal, interface visual), porém ao mesmo tempo fazendo a mixagem.
 
 Essa separação permitiu que ambos trabalhassem simultaneamente sem sobrescrever o trabalho um do outro, já que cada módulo é um arquivo `.c` independente.
 
@@ -557,6 +558,8 @@ O parser em `parse.c` lê uma string caractere por caractere e extrai os coefici
 - **Encoding**: caracteres especiais (ã, ç, é) podem aparecer incorretamente em terminais Windows dependendo da configuração de codificação
 - **Variáveis com letras não sequenciais**: o sistema pode gerar resultados incorretos se as variáveis pularem letras do alfabeto (ex: usar `a` e `z` sem as letras intermediárias)
 
+
+## Desenvolvedores
 👨‍💻 Desenvolvido por: **Maycon Douglas da Silva** e   **Felype de Moura Lino e Silva** 
 
 📧 Contato: [mayconcontacts@gmail.com]  
