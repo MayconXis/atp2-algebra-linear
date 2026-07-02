@@ -151,7 +151,6 @@ int main() {
                         enterPraContinuar();
                         break; 
                     }
-                    enterPraContinuar();
                     limparTela();
                     printf("Matriz formada pelos vetores do R%d:\n", dimensao);
                     printarMatriz(vetores);
